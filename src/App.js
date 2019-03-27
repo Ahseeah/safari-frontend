@@ -8,11 +8,6 @@ class App extends Component {
     animals: [],
     name: ''
   }
-
-  componentDidMount() {
-    this.showAllAnimals()
-  }
-
   showAllAnimals = () => {
     axios.get('http://localhost:3000/animals').then(response => {
       console.log(response.data)
@@ -20,6 +15,10 @@ class App extends Component {
         animals: response.data
       })
     })
+  }
+
+  componentDidMount() {
+    this.showAllAnimals()
   }
 
   incrementSeenCount = () => {
@@ -36,22 +35,22 @@ class App extends Component {
   }
 
   handleSearchChange = event => {
-    const name = event.target.value
-    this.setState({ name: name }, () => {
+    const location = event.target.value
+    this.setState({ name: location }, () => {
       //make api call to search for animals
 
-      fetch(`http://localhost:3000/animals?name=${this.state.name}`)
-        // .then(response => response.json())
+      fetch(`http://localhost:3000/animals?location=${this.state.name}`)
+        .then(response => response.json())
         .then(response => {
-          console.log(response)
-          this.setState({ animals: response })
+          console.log(response.data)
+          this.setState({ animals: response.data })
         })
     })
   }
 
-  removeAnimal = id => {
-    axios.delete(`http://localhost:3000/animals/${id}`)
-  }
+  // removeAnimal = id => {
+  //   axios.delete(`http://localhost:3000/animals/${id}`)
+  // }
 
   submit = form => {
     console.log(form)
@@ -73,21 +72,15 @@ class App extends Component {
     return (
       <section>
         <h1>Search here:</h1>
-        <input value={this.state.name} onChange={this.handleSearchChange} />
+        <input
+          value={this.state.name}
+          onChange={this.handleSearchChange}
+          type="text"
+        />
+        <h3>The List of Animals Seen is:</h3>
         <ul>
-          <h3>The List of Animals Seen is:</h3>
           {this.state.animals.map(animal => {
-            return (
-              <AnimalListing
-                key={animal.id}
-                id={animal.id}
-                seenAmount={animal.seen_count}
-                species={animal.species}
-                locationSeen={animal.last_seen_location}
-                showAnimalList={this.showAllAnimals}
-                removeAnimal={this.removeAnimal}
-              />
-            )
+            return <AnimalListing key={animal.id} animal={animal} />
           })}
         </ul>
         <section>
