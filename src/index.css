@@ -1,6 +1,6 @@
 :root {
   font: 16px / 1 sans-serif;
-  color: rgb(144, 236, 216);
+  color: rgb(238, 238, 238);
 }
 
 html {
@@ -15,11 +15,14 @@ body {
 }
 
 ul {
+  align-items: inherit;
   text-align: center;
-  box-shadow: 5px 5px 3px cornflowerblue;
+  box-shadow: 5px 5px 3px chartreuse;
   border-radius: 10px;
   margin: 1rem;
   padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 h1 {
@@ -29,6 +32,8 @@ h1 {
   border-radius: 10px;
   width: 50%;
   margin: 6%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 section {
